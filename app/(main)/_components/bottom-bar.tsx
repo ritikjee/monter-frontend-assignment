@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/menubar";
 import { usePage } from "@/providers/data-provider";
 import { cn } from "@/lib/utils";
+import { dummyData } from "@/dummy-data";
 
 type Props = {};
 
@@ -22,7 +23,10 @@ function BottomBar({}: Props) {
     const pageNumbers = [];
     const maxPagesToShow = 5;
     const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
-    const endPage = Math.min(100 / pageSize, startPage + maxPagesToShow - 1);
+    const endPage = Math.min(
+      dummyData.length / pageSize,
+      startPage + maxPagesToShow - 1
+    );
 
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
@@ -45,7 +49,7 @@ function BottomBar({}: Props) {
     <div className="w-full flex items-center justify-center gap-1 sm:gap-3 mt-5">
       <div className="flex items-center justify-center gap-2">
         <button
-          className="flex items-center justify-center gap-1 hover:cursor-pointer"
+          className="flex items-center justify-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed hover:cursor-pointer"
           disabled={page === 1}
           onClick={() => {
             if (page > 1) {
@@ -59,8 +63,8 @@ function BottomBar({}: Props) {
         <div className="flex ">{renderPageNumbers()}</div>
 
         <button
-          className="flex flex-row-reverse items-center justify-center gap-1 hover:cursor-pointer"
-          disabled={page === 100 / pageSize}
+          className="flex flex-row-reverse items-center justify-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed hover:cursor-pointer"
+          disabled={page === dummyData.length / pageSize}
           onClick={() => {
             setPage(page + 1);
           }}
