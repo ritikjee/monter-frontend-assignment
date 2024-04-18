@@ -11,16 +11,42 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { usePage } from "@/providers/data-provider";
+import { cn } from "@/lib/utils";
 
 type Props = {};
 
 function BottomBar({}: Props) {
   const { page, pageSize, setPage, setPageSize } = usePage();
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+    const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(100 / pageSize, startPage + maxPagesToShow - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          className={cn(
+            "border-2 flex  justify-center items-center sm:w-8 w-6 h-6 sm:h-8 rounded-xl",
+            page === i && "bg-orange-600 text-white"
+          )}
+          onClick={() => setPage(i)}
+        >
+          <p>{i}</p>
+        </button>
+      );
+    }
+    return pageNumbers;
+  };
+
   return (
-    <div className="w-full flex items-center justify-center gap-3 mt-5">
+    <div className="w-full flex items-center justify-center gap-1 sm:gap-3 mt-5">
       <div className="flex items-center justify-center gap-2">
         <button
           className="flex items-center justify-center gap-1 hover:cursor-pointer"
+          disabled={page === 1}
           onClick={() => {
             if (page > 1) {
               setPage(page - 1);
@@ -30,9 +56,11 @@ function BottomBar({}: Props) {
           <RxTrackPrevious />
           Prev
         </button>
-        <div>{page}</div>
+        <div className="flex ">{renderPageNumbers()}</div>
+
         <button
           className="flex flex-row-reverse items-center justify-center gap-1 hover:cursor-pointer"
+          disabled={page === 100 / pageSize}
           onClick={() => {
             setPage(page + 1);
           }}
@@ -41,8 +69,8 @@ function BottomBar({}: Props) {
           Next
         </button>
       </div>
-      <div className="flex items-center justify-center gap-2">
-        Rows per page
+      <div className="flex items-center justify-center gap-1 sm:gap-2">
+        Rows <span className="hidden sm:flex">per page</span>
         <Menubar>
           <MenubarMenu>
             <MenubarTrigger>{pageSize}</MenubarTrigger>
