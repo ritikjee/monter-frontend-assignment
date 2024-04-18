@@ -16,8 +16,8 @@ function TableRow({ name1, name2, name3, heading }: TableRowProps) {
       )}
     >
       <div className="md:w-52">{name1}</div>
-      <div className="flex md:flex-1">{name2}</div>
-      <div className="text-center">{name3}</div>
+      <div className="flex md:flex-1 overflow-clip">{name2}</div>
+      <div className="px-5">{name3}</div>
     </div>
   );
 }

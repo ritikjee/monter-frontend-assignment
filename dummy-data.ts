@@ -1,4 +1,4 @@
-type dummyDataTypes = {
+export type dummyDataTypes = {
   date: string;
   time: string;
   reportName: string;
