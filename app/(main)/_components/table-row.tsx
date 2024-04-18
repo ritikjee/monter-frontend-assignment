@@ -12,7 +12,7 @@ function TableRow({ name1, name2, name3, heading }: TableRowProps) {
     <div
       className={cn(
         "w-full flex flex-row items-center justify-around px-2 py-1 my-2 ",
-        heading ? "font-bold text-lg text-gray-500 bg-gray-200" : null
+        heading && "font-bold text-lg text-gray-500 bg-gray-200"
       )}
     >
       <div className="md:w-52">{name1}</div>
